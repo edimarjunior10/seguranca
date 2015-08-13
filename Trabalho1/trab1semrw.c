@@ -7,22 +7,21 @@ int main(){
 	int opcao=0, key=5, tam=100, tamstring;
 	char txt[tam];
 			
+	printf("Digite texto a criptografar: ");
+	scanf("%s", txt);
+		
+	printf("\nTexto Original: %s", txt); 
+
+	tamstring = strlen(txt);		
+			
 	
-	printf("Escolha a opção:\n1 - Cesar\n2 - Transposição\n3 - Venegere\n4 - Substituição\n");
+	printf("\n\nEscolha a opção:\n1 - Cesar\n2 - Transposição\n3 - Venegere\n4 - Substituição\n");
 	scanf("%d", &opcao);
 	printf("Opcao selecionada: %d\n", opcao);
 	
 	if(opcao == 1){
 		//cifra de cesar
 		int i;
-			
-		printf("\nDigite texto a criptografar: ");
-		scanf("%s", txt);
-		
-		printf("\nTexto Original: %s", txt); 
-		//printf("\nTexto Original tem: %d strings\n", (int)strlen(txt)); 
-			
-		tamstring = strlen(txt);
 			
 		for(i=0; i<=tamstring; i++){
 			txt[i] = (txt[i] + key + 256) % 256;	
@@ -37,14 +36,6 @@ int main(){
 		//cifra transposição
 		
 		int l, c, n, o, cnt=0;
-		
-		printf("\nDigite texto a criptografar: ");
-		scanf("%s", txt);
-		
-		printf("\nTexto Original: %s", txt); 
-		//printf("\nTexto Original tem: %d strings\n", (int)strlen(txt)); 
-			
-		tamstring = strlen(txt);
 		
 		int linhas = (tamstring/key);
 		if ((tamstring%key) != 0)
@@ -99,13 +90,8 @@ int main(){
 		
 		char keys[] = "BOLO";
 		int w, z, tamk=0, x;
-		
-		printf("\nDigite texto a criptografar: ");
-		scanf("%s", txt);
-		
+
 		printf("\nChave: %s", keys);
-		printf("\nTexto Original: %s", txt); 
-		//printf("\nTexto Original tem: %d strings\n", (int)strlen(txt)); 
 			
 		tamstring = strlen(txt);
 		tamk = strlen(keys);
@@ -118,7 +104,7 @@ int main(){
 				if(z==tamk)
 					z=0;
 		}
-		printf("\nTexto Chave %s", txtaux);
+		printf("\nTexto Chave: %s", txtaux);
 		
 		for(x=0; x<tamstring; x++){			
 				txtveg[x] = (txt[x] + txtaux[x] + 256) % 256;					
@@ -135,27 +121,66 @@ int main(){
 		
 	}else if(opcao == 4){
 		//cifra substituicao
-		int k, tamalfa=256;
+		int k, v, u, tamalfa=128, t=127;
 		int vaux[tamalfa], vsub[tamalfa][2];
 		
+		//t=127;
 		for(k=0; k<tamalfa; k++){
 			vaux[k] = k;
 			vsub[k][1] = k;
-			//printf("k: %d\n", k);
-			//printf("v[k]: %d\n", vsub[k][1]);
-			//printf("v[k]: %c\n", vsub[k]);
+			vsub[k][2] = t;
+			t--;
+			//printf("k: %d ", k);
+			//printf("v[k]: %d ", vsub[k][1]);
+			//printf("t[k]: %d\n", vsub[k][2]);
+		}
+				
+		/*printf("Original\n");
+		for(v=0; v<tamstring; v++){
+			printf("%d ", txt[v]);
+		}
+		printf("\n\n");
+		for(v=0; v<tamstring; v++){			
+			for(u=0; u<tamalfa; u++){
+				if(txt[v] == vsub[u][1]){
+					printf("v: %d ", v);
+					printf("u: %d\n", u);
+					printf("txt: %c ", txt[v]);
+					printf("vsub: %c\n", vsub[u][1]);
+					printf("vsub: %c\n\n\n", vsub[u][2]);
+					txt[v] = (vsub[u][2] + 128) % 128;	
+				}
+			}
+		}*/
+		
+		for(v=0; v<tamstring; v++){			
+			for(u=0; u<tamalfa; u++){
+				if(txt[v] == vsub[u][1]){
+					txt[v] = (vsub[u][2] + 128) % 128;	
+				}
+			}
 		}
 		
+		printf("Texto Criptografado:\n");
+		for(v=0; v<tamstring; v++){
+			printf("%c", txt[v]);
+		}
+		printf("\n\n");
 		
+		for(v=0; v<tamstring; v++){			
+			for(u=0; u<tamalfa; u++){
+				if(txt[v] == vsub[u][2]){
+					txt[v] = (vsub[u][1] + 128) % 128;	
+				}
+			}
+		}
 		
-		printf("\nDigite texto a criptografar: ");
-		scanf("%s", txt);
-		
-		printf("\nTexto Original: %s", txt); 
-		//printf("\nTexto Original tem: %d strings\n", (int)strlen(txt)); 
+		printf("Texto Descriptografado:\n");
+		for(v=0; v<tamstring; v++){
+			printf("%c", txt[v]);
+		}
+		printf("\n\n");
 			
-		tamstring = strlen(txt);
-		
 	}
 				
 	return 0;
