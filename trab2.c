@@ -1,0 +1,141 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+int main(){
+	
+	srand(time(NULL));	
+	
+	FILE *input, *output;
+	
+	input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg11.txt", "r"); 
+	output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg11.txt.enc", "r"); 
+	
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg74.txt", "r"); 
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg74.txt.enc", "r"); 
+	
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg76.txt", "r");
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg76.txt.enc", "r"); 
+	 
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg174.txt", "r"); 
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg174.txt.enc", "r"); 
+	
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg1232.txt", "r");
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg1232.txt.enc", "r");
+	 
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg1342.txt", "r"); 
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg1342.txt.enc", "r");
+	
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg1661.txt", "r"); 
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg1661.txt.enc", "r"); 
+	
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg27827.txt", "r"); 
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg27827.txt.enc", "r"); 
+	
+	if (input==NULL){
+		printf("Arquivo Input nao encontrado!\n");
+		exit(0);
+    }
+	if (output==NULL){
+		printf("Arquivo Output nao encontrado!\n");
+		exit(0);
+    }
+    
+	fseek(input, 0, SEEK_END);
+	fseek(output, 0, SEEK_END);
+	
+	int tamIn=0, tamOut=0;
+    tamIn = ftell(input);
+    tamOut = ftell(output);
+    
+    fseek(input, 0, 0);
+    fseek(output, 0, 0);
+    
+    //VARIAVEIS-----------------------------------------------------
+    int tamTxtIn=0, tamTxtOut=0, op=0, x=0, y=0, w=0, z=0;
+    char txtIn[tamIn], txtOut[tamOut], txtAux[tamOut], txtAux2[tamOut], keyV[] = "BOLO";
+    int i=0, keyC=0, tamKv=0;
+     
+    while (!feof(input)){
+		fread(&txtIn[x], sizeof(char), 1, input);
+		x++;			
+	}
+	while (!feof(output)){
+		fread(&txtOut[y], sizeof(char), 1, output);
+		y++;			
+	}
+	
+	tamTxtIn = strlen(txtIn);
+    tamTxtOut = strlen(txtOut);
+    
+    //while(op!=0){
+	printf(" 1 - Cesar | 2 - Transposicao | 3 - Venegere | 4 - Substituicao\n");
+	scanf("%d", &op);
+		
+	if(op==1){
+		//--------------------------------------------CESAR
+		keyC = (txtOut[i] - txtIn[i] + 256) % 256;	
+		printf("keyC: %d\n", keyC);
+		
+		strcpy(txtAux, txtOut);
+				
+		for(i=0; i<tamTxtOut; i++){
+			txtAux[i] = (txtOut[i] - keyC + 256) % 256;	
+			//printf("keyC: %d\n", keyC);
+		}
+		
+		printf("\n\nTxtAux:\n %s", txtAux);
+		printf("\n\n\tCHAVE: %d\n", keyC);
+	}
+	if(op==2){
+		//--------------------------------------------TRANSPOSICAO
+		//printf("\n\nTxtIn:\n %s", txtIn);
+		printf("\n\nTxtOut:\n %s", txtOut);
+		
+		
+	}
+	if(op==3){
+		//--------------------------------------------VEGENERE
+		//printf("\n\nTxtIn:\n %s", txtIn);
+		//printf("\n\nTxtOut:\n %s", txtOut);
+		tamKv = strlen(keyV);
+		
+		z=0;
+		for(w=0; w<tamTxtOut; w++){
+				txtAux[w] = keyV[z];
+				z++;
+				if(z==tamKv)
+					z=0;
+		}
+		
+		for(i=0; i<tamTxtOut; i++){
+			txtAux2[i] = (txtOut[i] - txtAux[i] + 256) % 256;	
+			//printf("keyC: %d\n", keyC);
+		}
+		
+		printf("\n\nTxtAuxV:\n %s", txtAux);
+		
+		
+	}
+	if(op==4){
+		//--------------------------------------------SUBSTITUICAO
+		//printf("\n\nTxtIn:\n %s", txtIn);
+		//printf("\n\nTxtOut:\n %s", txtOut);
+	}
+	//}
+	
+	return 0;
+}
+
+
+/*
+	Arquivo 1 - pg11 - CESAR - Chave:5
+	Arquivo 2 - pg74 - 
+	Arquivo 3 - pg76 - 
+	Arquivo 4 - pg174 - 
+	Arquivo 5 - pg1232 - CESAR - Chave:22
+	Arquivo 6 - pg1342 - 
+	Arquivo 7 - pg1661 - 
+	Arquivo 8 - pg27827 - 
+*/

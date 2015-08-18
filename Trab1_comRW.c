@@ -10,12 +10,19 @@ int main(){
 	
 	srand(time(NULL));	
 	
-	FILE *input;
-	input=fopen("teste.enc", "r"); 
+	FILE *input, *output;
+	
+	input=fopen("in.txt", "r"); 
+	output=fopen("teste.enc", "r"); 
 	if (input==NULL){
 		printf("Arquivo nao encontrado!\n");
 		exit(0);
     }
+	if (output==NULL){
+		printf("Arquivo nao encontrado!\n");
+		exit(0);
+    }
+    
 	fseek(input, 0, SEEK_END);
     
     //int tamArquivo=0, 
