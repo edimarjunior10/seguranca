@@ -27,11 +27,11 @@ int main(){
 	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg1342.txt", "r"); 
 	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg1342.txt.enc", "r");
 	
-	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg1661.txt", "r"); 
-	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg1661.txt.enc", "r"); 
+	input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg1661.txt", "r"); 
+	output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg1661.txt.enc", "r"); 
 	
-	input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg27827.txt", "r"); 
-	output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg27827.txt.enc", "r"); 
+	//input=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/inputs/pg27827.txt", "r"); 
+	//output=fopen("/home/edimarjunior/Documentos/Gits/Seguranca/Trabalho2/arquivos/outputs/pg27827.txt.enc", "r"); 
 	
 	if (input==NULL){
 		printf("Arquivo Input nao encontrado!\n");
@@ -54,8 +54,8 @@ int main(){
     
     //VARIAVEIS-----------------------------------------------------
     char txtIn[tamIn], txtOut[tamOut], txtAux[tamOut], keyV[tamOut]; //keyV[] = "abcd";
-    int tamTxtIn=0, tamTxtOut=0, op=0, ff=256, keyC=0, tamKv=0, keyT=0, loc=0;
-    int i=0, x=0, y=0, w=0, z=0, a, b, c, d, e, criaV;
+    int tamTxtIn=0, tamTxtOut=0, op=0, ff=256, keyC=0, keyT=0;
+    int i=0, x=0, y=0, a, b, c, d, e, criaV, w, z, t, l, j, p, q, k, cnt=0, auxx=0, resulT, comp1, comp2=0;
     char vsub[ff][2];
      
     while (!feof(input)){
@@ -69,6 +69,8 @@ int main(){
 	
 	tamTxtIn = strlen(txtIn);
     tamTxtOut = strlen(txtOut);
+    
+   // printf("%s", txtOut);
     
     //while(op!=0){
 	printf(" 1 - Cesar | 2 - Transposicao | 3 - Venegere | 4 - Substituicao\n");
@@ -91,39 +93,97 @@ int main(){
 	}
 	if(op==2){
 		//--------------------------------------------TRANSPOSICAO
-		//printf("\n\nTxtIn:\n %s", txtIn);
-		//printf("\n\nTxtOut:\n %s", txtOut);
-		//printf("tamArq: %d", tamOut);
-		//printf("tamStr: %d", tamTxtOut);
-		int multi=0;
+		/*keyT = 7;
+		t=0;
+		for(z=0; z<keyT; z++){
+			//printf("vishe");
+			if(txtOut[t] != ' '){
+				txtAux[t] = txtOut[t];
+				t++;
+			}
+			w=z;
+			while(w<tamTxtOut){
+				w = w + keyT;
+				if(w>tamTxtOut)
+					continue;
+				if(txtOut[w] != ' '){	
+					txtAux[t] = txtOut[w];
+					t++;
+				}
+			}
+		}*/
+		/*int abb;
+		printf("TXT CLARO: \n\n");
+		for(abb=0; abb<300; abb++)
+			printf("%c", txtIn[abb]);
+		printf("\n\n\n");
 		
-		keyT = 7;
+		int abc;
+		printf("TXT CRIPTO: \n\n");
+		for(abc=0; abc<300; abc++)
+			printf("%c", txtOut[abc]);
+		printf("\n\n\n");*/
 		
-		loc = (tamTxtOut / keyT) +1;
-		
-		multi=loc*keyT;
-		
-		printf("tamOut: %d ", tamTxtOut);
-		printf("key: %d ", keyT);
-		printf("local: %d ", loc);
-		printf("multi: %d ", multi);
-		
-		int vish;
-		
-		for(vish=0;vish<tamTxtOut;vish++){
+		for(k=1; k<100; k++){
+			keyT = k; 
+			//printf("KeyT: %d\n", keyT);
 			
+			int colunas = (tamTxtOut/keyT)+1;		
+			if ((tamTxtOut%keyT) != 0)
+				colunas = colunas+1;	
+			char txttrans[keyT][colunas];
+			
+			cnt=0;
+			for(l=0; l<colunas; l++){	
+				for(j=0; j<keyT; j++){
+					if (txtIn[cnt] == '0' || txtIn[cnt] == '\0')
+						txtIn[cnt] = ' ';
+					txttrans[j][l] = txtIn[cnt];	
+					cnt++;
+				}
+			}
+
+			auxx=0;
+			for(j=0; j<keyT; j++){
+				for(l=0; l<colunas; l++){
+					txtAux[auxx] = txttrans[j][l];
+					//printf("txttrans[%d][%d]: %c\n", l, j, txttrans[l][j]);
+					auxx++;
+				}
+			}
+			for(comp1=0;comp1<1000;comp1++){
+			if(txtOut[comp1]==txtAux[comp1])
+				comp2++;
+			}
+			if(comp2==1000)
+				printf("CHAVE: %d", keyT);
+			else
+				comp2=0;
+		//printf("\n\n ------------------COMP2:   %d", comp2);
+		
 		}
 		
-		/*int la;
-		for(la=0; la<128; la++){
-			//printf("%d: %c", la, txtOut[la]);
-			printf("In: %d, %c ", txtIn[la],txtIn[la]);
-			printf(".Out:%d, %c\n ", txtOut[la],txtOut[la]);
-		} */
+		/*int aba;
+		printf("MATRIZ CRIPTO: \n\n");
+		for(aba=0; aba<300; aba++)
+			printf("%c", txtAux[aba]);
+		printf("\n");
 		
-		
-		
-		
+		printf("%s", txtAux);*/
+
+
+		//resulT = strcmp(txtAux, txtOut);
+		//printf("\n\n\nRESUL: %d", resulT);
+	
+
+		/*for(l=0; l<colunas; l++){
+			//printf("\n");
+			for(j=0; j<keyT; j++){
+				printf("%c", txttrans[j][l]);
+			}
+		}*/
+		//printf("TxtOut: %s", txtOut);
+
 	}
 	if(op==3){
 		//--------------------------------------------VEGENERE
@@ -158,9 +218,7 @@ int main(){
 	}
 	if(op==4){
 		//--------------------------------------------SUBSTITUICAO
-		//printf("\n\nTxtIn:\n %s", txtIn);
-		//printf("\n\nTxtOut:\n %s", txtOut);
-		
+
 		for(e=0; e<tamTxtOut; e++){
 			txtAux[e] = txtOut[e];
 		}
@@ -201,7 +259,7 @@ int main(){
 	Arquivo 3 - pg76 - SUBSTITUIÇÃO
 	Arquivo 4 - pg174 - VEGENERE - Chave:abcd
 	Arquivo 5 - pg1232 - CESAR - Chave:22
-	Arquivo 6 - pg1342 - 7
-	Arquivo 7 - pg1661 - 55
+	Arquivo 6 - pg1342 - TRANSPOSIÇÃO - Chave:7
+	Arquivo 7 - pg1661 - TRANSPOSIÇÃO - Chave:55
 	Arquivo 8 - pg27827 - VEGENERE - Chave:123456
 */
